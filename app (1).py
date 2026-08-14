@@ -33,7 +33,7 @@ if uploaded_file is not None:
     st.image(image, caption="Uploaded Image", use_container_width=True)
 
     # Make prediction using FastAI's model
-    prediction, _, probabilities = model.predict(image)
+    pred, _, probs = model.predict(image)
 
     # Display the prediction
     st.write(f"Prediction: **{pred}**")
