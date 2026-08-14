@@ -2,7 +2,6 @@ import streamlit as st
 from fastai.learner import load_learner
 from fastai.vision.core import PILImage
 
-
 # =========================================================
 # PAGE CONFIGURATION
 # =========================================================
@@ -26,11 +25,11 @@ st.write(
     "an AI-based preliminary screening result."
 )
 st.warning(
-"⚠️ This result is an AI-based preliminary "
-"screening and is NOT a medical diagnosis. "
-"The model may produce incorrect results. "
-"Please consult a qualified healthcare "
-"professional for proper evaluation."
+    "⚠️ This result is an AI-based preliminary "
+    "screening and is NOT a medical diagnosis. "
+    "The model may produce incorrect results. "
+    "Please consult a qualified healthcare "
+    "professional for proper evaluation."
 )
 # =========================================================
 # DISEASE INFORMATION
@@ -185,33 +184,41 @@ uploaded_file = st.file_uploader(
     type=["jpg", "jpeg", "png"]
 )
 # =========================================================
-# IMAGE PROCESSING & PREDICTION
+# IMAGE PROCESSING
 # =========================================================
 if uploaded_file is not None:
     # Convert uploaded image into FastAI-compatible image
     image = PILImage.create(uploaded_file)
-    # -----------------------------------------------------
+    # =====================================================
     # DISPLAY IMAGE
-    # -----------------------------------------------------
+    # =====================================================
     st.image(
         image,
         caption="Uploaded Image",
         use_container_width=True
     )
-    # -----------------------------------------------------
+    # =====================================================
     # ANALYZE BUTTON
-    # -----------------------------------------------------
+    # =====================================================
     if st.button("🔍 Analyze Image"):
         with st.spinner("Analyzing image..."):
             try:
-                # FastAI prediction
+                # =================================================
+                # FASTAI PREDICTION
+                # =================================================
                 pred, pred_idx, probs = model.predict(image)
                 # Convert tensor index to Python integer
                 pred_idx = pred_idx.item()
-                # Convert confidence from decimal to percentage
+                # Convert model confidence to percentage
                 confidence = float(
                     probs[pred_idx]
                 ) * 100
+                # Convert prediction to string
+                pred_key = str(pred).strip()
+                # Find disease information
+                info = disease_info.get(
+                    pred_key
+                )
                 # =================================================
                 # RESULT
                 # =================================================
@@ -219,14 +226,8 @@ if uploaded_file is not None:
                 st.subheader(
                     "🔎 Screening Result"
                 )
-                # Convert prediction to string
-                pred_key = str(pred)
-                # Find disease information
-                info = disease_info.get(
-                    pred_key
-                )
                 # -------------------------------------------------
-                # DISEASE NAME
+                # MAIN PREDICTION
                 # -------------------------------------------------
                 if info:
                     display_name = info["name"]
@@ -235,12 +236,65 @@ if uploaded_file is not None:
                 st.write(
                     f"### Prediction: **{display_name}**"
                 )
-                # -------------------------------------------------
-                # CONFIDENCE
-                # -------------------------------------------------
                 st.write(
                     f"**Model Confidence: {confidence:.2f}%**"
                 )
+                # =================================================
+                # OTHER MODEL PREDICTIONS
+                # =================================================
+                st.subheader(
+                    "🔄 Other Model Predictions"
+                )
+                # Get class names from FastAI
+                class_names = model.dls.vocab
+                # Sort probabilities from highest to lowest
+                sorted_indices = probs.argsort(
+                    descending=True
+                )
+                # Number of alternative predictions
+                num_alternatives = 3
+                shown = 0
+                for idx in sorted_indices:
+                    idx = int(idx)
+                    # Skip the main prediction
+                    if idx == pred_idx:
+                        continue
+                    # Get class name
+                    alternative_key = str(
+                        class_names[idx]
+                    ).strip()
+                    # Get confidence
+                    alternative_confidence = float(
+                        probs[idx]
+                    ) * 100
+                    # Find disease information
+                    alternative_info = disease_info.get(
+                        alternative_key
+                    )
+                    # Get readable disease name
+                    if alternative_info:
+                        alternative_name = (
+                            alternative_info["name"]
+                        )
+                    else:
+                        alternative_name = alternative_key
+                    # Display alternative prediction
+                    st.write(
+                        f"**{shown + 1}. "
+                        f"{alternative_name} — "
+                        f"{alternative_confidence:.2f}%**"
+                    )
+                    # Progress bar
+                    st.progress(
+                        min(
+                            alternative_confidence / 100,
+                            1.0
+                        )
+                    )
+                    shown += 1
+                    # Only show top 3 alternatives
+                    if shown >= num_alternatives:
+                        break
                 # =================================================
                 # DISEASE INFORMATION
                 # =================================================
@@ -280,6 +334,17 @@ if uploaded_file is not None:
                         "Additional information for this "
                         "prediction is not currently available."
                     )
+                # =================================================
+                # DISCLAIMER
+                # =================================================
+                st.divider()
+                st.warning(
+                    "⚠️ This result is an AI-based preliminary "
+                    "screening and is NOT a medical diagnosis. "
+                    "The model may produce incorrect results. "
+                    "Please consult a qualified healthcare "
+                    "professional for proper evaluation."
+                )
             except Exception as e:
                 st.error(
                     "An error occurred while analyzing the image."
