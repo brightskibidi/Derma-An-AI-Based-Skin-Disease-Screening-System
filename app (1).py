@@ -152,5 +152,5 @@ st.warning(
     "This result is an AI-based preliminary screening and is not a medical diagnosis. "
     "Please consult a qualified healthcare professional for proper evaluation."
 )
-else:
-    st.write("Please upload an image.")
+    else:
+        st.write("Please upload an image.")
