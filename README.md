@@ -7,5 +7,6 @@ Run app [click](https://derma-an-ai-based-skin-disease-screening-system-mnu4tjc3
 
 <img width="853" height="570" alt="image" src="https://github.com/user-attachments/assets/9510567f-c6b4-4b5f-ac2e-0584058e9e29" />
 (App interface)
+
 # Disclaimer
 ⚠️ This result is an AI-based preliminary screening and is NOT a medical diagnosis. The model may produce incorrect results. Please consult a qualified healthcare professional for proper evaluation.
