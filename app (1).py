@@ -26,7 +26,7 @@ st.write(
 # DISEASE INFORMATION
 # =========================================================
 disease_info = {
-    "'BA- cellulitis'": {
+    "BA- cellulitis": {
         "name": "Cellulitis",
         "description":
             "A bacterial infection affecting the deeper layers of the skin.",
