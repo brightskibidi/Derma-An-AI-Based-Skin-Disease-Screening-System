@@ -19,6 +19,9 @@ st.subheader(
     "AI-Based Preliminary Skin Disease Screening"
 )
 st.write(
+    "By Ruengsit Matachaiyasit & Teerapat Sittichottithikun"
+)
+st.write(
     "Upload an image of a skin condition to receive "
     "an AI-based preliminary screening result."
 )
