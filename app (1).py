@@ -148,9 +148,9 @@ if uploaded_file is not None:
         st.write("### What you can do")
         for action in info["what_to_do"]:
             st.write(f"- {action}")
-st.warning(
-    "This result is an AI-based preliminary screening and is not a medical diagnosis. "
-    "Please consult a qualified healthcare professional for proper evaluation."
+        st.warning(
+            "This result is an AI-based preliminary screening and is not a medical diagnosis. "
+            "Please consult a qualified healthcare professional for proper evaluation."
 )
     else:
         st.write("Please upload an image.")
