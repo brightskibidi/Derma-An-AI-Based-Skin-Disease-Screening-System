@@ -22,6 +22,13 @@ st.write(
     "Upload an image of a skin condition to receive "
     "an AI-based preliminary screening result."
 )
+st.warning(
+"⚠️ This result is an AI-based preliminary "
+"screening and is NOT a medical diagnosis. "
+"The model may produce incorrect results. "
+"Please consult a qualified healthcare "
+"professional for proper evaluation."
+)
 # =========================================================
 # DISEASE INFORMATION
 # =========================================================
@@ -270,18 +277,6 @@ if uploaded_file is not None:
                         "Additional information for this "
                         "prediction is not currently available."
                     )
-                # =================================================
-                # DISCLAIMER
-                # =================================================
-
-                st.divider()
-                st.warning(
-                    "⚠️ This result is an AI-based preliminary "
-                    "screening and is NOT a medical diagnosis. "
-                    "The model may produce incorrect results. "
-                    "Please consult a qualified healthcare "
-                    "professional for proper evaluation."
-                )
             except Exception as e:
                 st.error(
                     "An error occurred while analyzing the image."
