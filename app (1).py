@@ -39,6 +39,6 @@ if uploaded_file is not None:
 
     # Display the prediction
     st.write(f"Prediction: **{pred}**")
-    st.write(f"Probability: **{probs[pred_idx]:.4f}**")
+    st.write(f"Probability: **{probs[pred_idx]:.4f}*100**")
 else:
     st.write("Please upload an image.")
