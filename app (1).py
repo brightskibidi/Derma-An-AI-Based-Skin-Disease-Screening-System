@@ -170,6 +170,8 @@ def load_model():
     except Exception as e:
         st.error(f"Model loading failed: {type(e).__name__}: {e}")
         raise
+
+model = load_model()
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
