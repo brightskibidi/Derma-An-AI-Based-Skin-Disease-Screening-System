@@ -3,5 +3,6 @@ fastai==2.8.8
 torch==2.11.0
 torchvision==0.26.0
 pillow==11.3.0
+fastcore
 fasttransform
 cloudpickle
