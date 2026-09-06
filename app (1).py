@@ -169,8 +169,9 @@ def load_model():
 try:
     model = load_model()
 except Exception as e:
-    st.error(f"Model loading failed: {type(e).__name__}: {e}")
-    raise
+    st.error("Unable to load the AI model.")
+    st.exception(e)
+    st.stop()
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
