@@ -164,12 +164,18 @@ disease_info = {
 # =========================================================
 @st.cache_resource
 def load_model():
-    try:
-        model = load_learner("Skin_disease(1).pkl")
-        return model
-    except Exception as e:
-        st.error(f"Model loading failed: {type(e).__name__}: {e}")
-        raise
+    model = load_learner(
+        "Skin_disease (1).pkl"
+    )
+    return model
+try:
+    model = load_model()
+except Exception as e:
+    st.error(
+        "Unable to load the AI model."
+    )
+    st.exception(e)
+    st.stop()
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
