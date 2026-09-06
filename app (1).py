@@ -194,28 +194,25 @@ if uploaded_file is not None:
     # =====================================================
     # ANALYZE BUTTON
     # =====================================================
-    if st.button("🔍 Analyze Image"):
-    with st.spinner("Analyzing image..."):
-        try:
-            # ...
+     if st.button("🔍 Analyze Image"):
+        with st.spinner("Analyzing image..."):
             try:
+            # =================================================
+            # FASTAI PREDICTION
+            # =================================================
                 pred, pred_idx, probs = model.predict(image)
-            except Exception as e:
-                st.error(f"Prediction failed: {type(e).__name__}: {e}")
-                st.exception(e)
-                st.stop()
-                # Convert tensor index to Python integer
-                pred_idx = pred_idx.item()
-                # Convert model confidence to percentage
-                confidence = float(
-                    probs[pred_idx]
-                ) * 100
-                # Convert prediction to string
+
+            # Convert index safely to Python integer
+                pred_idx = int(pred_idx)
+
+            # Convert confidence to percentage
+                confidence = float(probs[pred_idx]) * 100
+
+            # Convert prediction to string
                 pred_key = str(pred).strip()
-                # Find disease information
-                info = disease_info.get(
-                    pred_key
-                )
+
+            # Find disease information
+                info = disease_info.get(pred_key)
                 # =================================================
                 # RESULT
                 # =================================================
