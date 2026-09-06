@@ -180,12 +180,16 @@ uploaded_file = st.file_uploader(
 # =========================================================
 # IMAGE PROCESSING
 # =========================================================
-from PIL import Image
-import io
-
 if uploaded_file is not None:
-    image = PILImage.create(
-        Image.open(io.BytesIO(uploaded_file.getvalue())).convert("RGB")
+    # Convert uploaded image into FastAI-compatible image
+    image = PILImage.create(uploaded_file)
+    # =====================================================
+    # DISPLAY IMAGE
+    # =====================================================
+    st.image(
+        image,
+        caption="Uploaded Image",
+        use_container_width=True
     )
     # =====================================================
     # ANALYZE BUTTON
@@ -197,8 +201,12 @@ if uploaded_file is not None:
                 # FASTAI PREDICTION
                 # =================================================
                 pred, pred_idx, probs = model.predict(image)
-                pred_idx = int(pred_idx)
-                confidence = float(probs[pred_idx]) * 100
+                # Convert tensor index to Python integer
+                pred_idx = pred_idx.item()
+                # Convert model confidence to percentage
+                confidence = float(
+                    probs[pred_idx]
+                ) * 100
                 # Convert prediction to string
                 pred_key = str(pred).strip()
                 # Find disease information
