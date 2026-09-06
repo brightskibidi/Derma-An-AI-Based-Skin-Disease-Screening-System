@@ -1,6 +1,5 @@
 streamlit
 fastai==2.8.8
-fastcore==2.2.16
 fasttransform==0.0.2
 torch==2.11.0
 torchvision==0.26.0
