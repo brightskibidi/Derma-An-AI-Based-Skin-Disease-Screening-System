@@ -194,25 +194,41 @@ if uploaded_file is not None:
     # =====================================================
     # ANALYZE BUTTON
     # =====================================================
-    if st.button("🔍 Analyze Image"):
-        with st.spinner("Analyzing image..."):
-            try:
-                # =================================================
-                # FASTAI PREDICTION
-                # =================================================
-                pred, pred_idx, probs = model.predict(image)
-                # Convert tensor index to Python integer
-                pred_idx = pred_idx.item()
-                # Convert model confidence to percentage
-                confidence = float(
-                    probs[pred_idx]
-                ) * 100
-                # Convert prediction to string
-                pred_key = str(pred).strip()
-                # Find disease information
-                info = disease_info.get(
-                    pred_key
-                )
+   if st.button("🔍 Analyze Image"):
+    with st.spinner("Analyzing image..."):
+        try:
+            # =================================================
+            # FASTAI PREDICTION
+            # =================================================
+            pred, pred_idx, probs = model.predict(image)
+
+            # Convert tensor index to Python integer
+            pred_idx = int(pred_idx)
+
+            # Convert model confidence to percentage
+            confidence = float(probs[pred_idx]) * 100
+
+            # Convert prediction to string
+            pred_key = str(pred).strip()
+
+            # Find disease information
+            info = disease_info.get(pred_key)
+
+            # If disease isn't found in dictionary
+            if info is None:
+                st.warning(f"Prediction: {pred_key}")
+                st.warning("No information found for this prediction.")
+            else:
+                # Display result
+                st.success(f"Prediction: {pred_key}")
+                st.write(f"Confidence: {confidence:.2f}%")
+
+                # Display disease information
+                st.write(info)
+
+        except Exception as e:
+            st.error(f"Prediction failed: {type(e).__name__}: {e}")
+            st.exception(e)
                 # =================================================
                 # RESULT
                 # =================================================
