@@ -195,17 +195,15 @@ if uploaded_file is not None:
     # ANALYZE BUTTON
     # =====================================================
     if st.button("🔍 Analyze Image"):
-        with st.spinner("Analyzing image..."):
+    with st.spinner("Analyzing image..."):
+        try:
+            # ...
             try:
-                # =================================================
-                # FASTAI PREDICTION
-                # =================================================
-                try:
-                    pred, pred_idx, probs = model.predict(image)
-                except Exception as e:
-                    st.error(f"Prediction failed: {type(e).__name__}: {e}")
-                    st.exception(e)
-                    st.stop()
+                pred, pred_idx, probs = model.predict(image)
+            except Exception as e:
+                st.error(f"Prediction failed: {type(e).__name__}: {e}")
+                st.exception(e)
+                st.stop()
                 # Convert tensor index to Python integer
                 pred_idx = pred_idx.item()
                 # Convert model confidence to percentage
