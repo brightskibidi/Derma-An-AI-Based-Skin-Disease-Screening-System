@@ -162,20 +162,14 @@ disease_info = {
 # =========================================================
 # LOAD MODEL
 # =========================================================
-from pathlib import Path
-
-MODEL_PATH = Path(__file__).parent / "Skin_disease(1).pkl"
-
 @st.cache_resource
 def load_model():
     try:
-        model = load_learner(MODEL_PATH)
+        model = load_learner("Skin_disease (1).pkl")
         return model
     except Exception as e:
         st.error(f"Model loading failed: {type(e).__name__}: {e}")
         raise
-        
-model = load_model()
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
@@ -202,26 +196,23 @@ if uploaded_file is not None:
     # =====================================================
     if st.button("🔍 Analyze Image"):
         with st.spinner("Analyzing image..."):
-            st.write("STEP 1: Starting prediction")
-            
             try:
-                st.write("STEP 2: Model type =", type(model))
-                st.write("STEP 3: Image type =", type(image))
-                st.write("STEP 4: Image =", image)
-
-                pred_result = model.predict(image)
-
-                st.write("STEP 5: Prediction completed")
-                st.write("Raw result:", pred_result)
-
-                pred, pred_idx, probs = pred_result
-
-            except Exception as e:
-                st.error("Prediction failed")
-                st.write("Error type:", type(e).__name__)
-                st.write("Error:", repr(e))
-                st.exception(e)
-                st.stop()
+                # =================================================
+                # FASTAI PREDICTION
+                # =================================================
+                pred, pred_idx, probs = model.predict(image)
+                # Convert tensor index to Python integer
+                pred_idx = pred_idx.item()
+                # Convert model confidence to percentage
+                confidence = float(
+                    probs[pred_idx]
+                ) * 100
+                # Convert prediction to string
+                pred_key = str(pred).strip()
+                # Find disease information
+                info = disease_info.get(
+                    pred_key
+                )
                 # =================================================
                 # RESULT
                 # =================================================
