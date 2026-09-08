@@ -168,14 +168,7 @@ def load_model():
         "Skin_disease.pkl"
     )
     return model
-try:
-    model = load_model()
-except Exception as e:
-    st.error(
-        "Unable to load the AI model."
-    )
-    st.exception(e)
-    st.stop()
+model=load_model()
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
