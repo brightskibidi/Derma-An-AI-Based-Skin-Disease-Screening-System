@@ -3,7 +3,16 @@ from fastai.learner import load_learner
 from fastai.vision.core import PILImage
 import pathlib
 import sys
+import torch
+import fastai
+import torchvision
+import PIL
 
+st.write("Python:", sys.version)
+st.write("PyTorch:", torch.__version__)
+st.write("Torchvision:", torchvision.__version__)
+st.write("fastai:", fastai.__version__)
+st.write("Pillow:", PIL.__version__)
 # =========================================================
 # PAGE CONFIGURATION
 # =========================================================
