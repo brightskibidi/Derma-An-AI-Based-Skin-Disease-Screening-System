@@ -170,12 +170,12 @@ def load_model():
     return model
 try:
     model = load_model()
-except Exception as e:
-    st.error(
-        "Unable to load the AI model."
-    )
-    st.exception(e)
-    st.stop()
+    except Exception as e:
+        st. error(
+            "Unable to load the AI model."
+        )
+        st.exception(e)
+        st.stop()
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
