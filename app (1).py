@@ -168,16 +168,12 @@ disease_info = {
 # =========================================================
 @st.cache_resource
 def load_model():
-    model = load_learner(
-        "Skin_disease.pkl"
-    )
+    model = load_learner("Skin_disease.pkl")
     return model
 try:
     model = load_model()
 except Exception as e:
-    st.error(
-        "Unable to load the AI model."
-    )
+    st.error("Unable to load the AI model.")
     st.exception(e)
     st.stop()
 # =========================================================
