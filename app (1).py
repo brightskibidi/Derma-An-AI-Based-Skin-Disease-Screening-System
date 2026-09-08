@@ -1,6 +1,10 @@
 import streamlit as st
 from fastai.learner import load_learner
 from fastai.vision.core import PILImage
+import pathlib
+import sys
+
+sys.modules["pathlib._local"] = pathlib
 
 # =========================================================
 # PAGE CONFIGURATION
@@ -168,7 +172,14 @@ def load_model():
         "Skin_disease.pkl"
     )
     return model
-model=load_model()
+try:
+    model = load_model()
+except Exception as e:
+    st.error(
+        "Unable to load the AI model."
+    )
+    st.exception(e)
+    st.stop()
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
