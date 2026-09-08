@@ -4,8 +4,6 @@ from fastai.vision.core import PILImage
 import pathlib
 import sys
 
-sys.modules["pathlib._local"] = pathlib
-
 # =========================================================
 # PAGE CONFIGURATION
 # =========================================================
