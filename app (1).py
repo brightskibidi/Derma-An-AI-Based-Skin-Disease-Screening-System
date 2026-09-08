@@ -175,7 +175,11 @@ disease_info = {
 # =========================================================
 @st.cache_resource
 def load_model():
-    model = load_learner("Skin_disease.pkl", cpu=True)
+    model = load_learner(
+        "Skin_disease.pkl",
+        cpu=True,
+        weights_only=False
+    )
     return model
 try:
     model = load_model()
