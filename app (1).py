@@ -194,6 +194,11 @@ def load_model():
     )
 
     return model
+try:
+    model = load_model()
+except Exception as e:
+    st.error(f"Error loading model: {e}")
+    st.stop()
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
