@@ -175,18 +175,14 @@ disease_info = {
 # =========================================================
 @st.cache_resource
 def load_model():
-    model = load_learner(
+    model = torch.load(
         "Skin_disease.pkl",
-        cpu=True,
+        map_location="cpu",
         weights_only=False
     )
     return model
-try:
-    model = load_model()
-except Exception as e:
-    st.error("Unable to load the AI model.")
-    st.exception(e)
-    st.stop()
+
+model = load_model()
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
