@@ -165,7 +165,7 @@ disease_info = {
 @st.cache_resource
 def load_model():
     model = load_learner(
-        "Skin_disease (1).pkl"
+        "Skin_disease.pkl"
     )
     return model
 try:
