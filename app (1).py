@@ -8,6 +8,7 @@ import fastai
 import torchvision
 import PIL
 import os
+from diagnosis import *
 
 #*st.write("Python:", sys.version)
 #st.write("PyTorch:", torch.__version__)
