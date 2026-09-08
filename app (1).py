@@ -175,14 +175,25 @@ disease_info = {
 # =========================================================
 @st.cache_resource
 def load_model():
+
+    st.write("Python:", __import__("sys").version)
+    st.write("PyTorch:", torch.__version__)
+    st.write(
+        "TORCH_FORCE_WEIGHTS_ONLY_LOAD:",
+        os.environ.get("TORCH_FORCE_WEIGHTS_ONLY_LOAD")
+    )
+    st.write(
+        "TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD:",
+        os.environ.get("TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD")
+    )
+
     model = torch.load(
         "Skin_disease.pkl",
         map_location="cpu",
         weights_only=False
     )
-    return model
 
-model = load_model()
+    return model
 # =========================================================
 # IMAGE UPLOADER
 # =========================================================
